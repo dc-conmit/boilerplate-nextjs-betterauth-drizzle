@@ -1,16 +1,22 @@
-import { pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
+import { pgEnum, pgTable as table, text, timestamp, uniqueIndex, uuid } from 'drizzle-orm/pg-core';
 
-export const users = pgTable('users', {
+export const rolesEnum = pgEnum("roles", ["property_manager", "service_provider"]);
+
+
+export const users = table('users', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: text('name'),
+  role: rolesEnum('role').notNull(),
   email: text('email').notNull().unique(),
   emailVerified: timestamp('emailVerified', { mode: 'date' }),
   image: text('image'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
-});
+}, (table) => [
+  uniqueIndex("email_idx").on(table.email)
+]);
 
-export const accounts = pgTable('accounts', {
+export const accounts = table('accounts', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: uuid('userId')
     .notNull()
@@ -29,7 +35,7 @@ export const accounts = pgTable('accounts', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
-export const sessions = pgTable('sessions', {
+export const sessions = table('sessions', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: uuid('userId')
     .notNull()
@@ -40,10 +46,15 @@ export const sessions = pgTable('sessions', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
-export const verificationTokens = pgTable('verificationTokens', {
-  identifier: text('identifier').notNull(),
-  token: text('token').notNull(),
-  expires: timestamp('expires', { mode: 'date' }).notNull(),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at').defaultNow().notNull(),
-}); 
+export const verifications = table('verifications', {
+  id: uuid("id").primaryKey().defaultRandom(),
+  identifier: text("identifier").notNull(),
+  value: text("value").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+});
+
+export type User = typeof users.$inferSelect;
+export type Account = typeof accounts.$inferSelect;
+export type Session = typeof sessions.$inferSelect;
+export type VerificationToken = typeof verifications.$inferSelect;
