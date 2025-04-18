@@ -1,8 +1,9 @@
-import { auth } from '@/lib/auth/auth';
-import { signOut } from '@/lib/auth/auth';
+import { authClient, signOut } from '@/lib/auth/auth-client';
 
 export default async function Home() {
-  const session = await auth();
+  const { 
+    data: session
+  } = authClient.useSession()
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
