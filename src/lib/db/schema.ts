@@ -1,20 +1,7 @@
-import { pgEnum, pgTable as table, text, timestamp, uniqueIndex, uuid } from 'drizzle-orm/pg-core';
-
-export const rolesEnum = pgEnum("roles", ["property_manager", "service_provider"]);
+import { pgTable as table, text, timestamp, uuid } from 'drizzle-orm/pg-core';
 
 
-export const users = table('users', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  name: text('name'),
-  role: rolesEnum('role').notNull(),
-  email: text('email').notNull().unique(),
-  emailVerified: timestamp('emailVerified', { mode: 'date' }),
-  image: text('image'),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at').defaultNow().notNull(),
-}, (table) => [
-  uniqueIndex("email_idx").on(table.email)
-]);
+// TODO: Remove this file
 
 export const accounts = table('accounts', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -35,17 +22,6 @@ export const accounts = table('accounts', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
-export const sessions = table('sessions', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  userId: uuid('userId')
-    .notNull()
-    .references(() => users.id, { onDelete: 'cascade' }),
-  sessionToken: text('sessionToken').notNull().unique(),
-  expires: timestamp('expires', { mode: 'date' }).notNull(),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at').defaultNow().notNull(),
-});
-
 export const verifications = table('verifications', {
   id: uuid("id").primaryKey().defaultRandom(),
   identifier: text("identifier").notNull(),
@@ -54,7 +30,6 @@ export const verifications = table('verifications', {
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 });
 
-export type User = typeof users.$inferSelect;
 export type Account = typeof accounts.$inferSelect;
 export type Session = typeof sessions.$inferSelect;
 export type VerificationToken = typeof verifications.$inferSelect;
