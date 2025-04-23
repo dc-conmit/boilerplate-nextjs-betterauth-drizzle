@@ -1,9 +1,9 @@
-import { relations } from 'drizzle-orm';
-import { sessions } from './sessions';
-import { users } from './users';
+import { relations } from 'drizzle-orm'
+import { sessions } from './auth'
+import { users } from './user'
 
-export * as users from './users';
-export * as sessions from './sessions';
+export * from './auth'
+export * from './user'
 
 // Relations
 

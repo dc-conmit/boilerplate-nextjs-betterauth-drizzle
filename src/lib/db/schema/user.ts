@@ -1,23 +1,22 @@
-import { pgTable, uuid, varchar, timestamp, text, pgEnum, uniqueIndex } from "drizzle-orm/pg-core";
+import { pgTable, uuid, timestamp, text, pgEnum, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
 export const userRoleEnum = pgEnum("user_roles", [
-    "property_manager",
-    "service_provider"
+  "property_manager",
+  "service_provider"
 ]);
 
 export const users = pgTable("users", {
   id: uuid('id').primaryKey().defaultRandom(),
-  email: varchar("email", { length: 255 }).notNull().unique(),
-  password: varchar("password", { length: 255 }).notNull(),
-  role: userRoleEnum('role').notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
-  image: text("image"),
-}, (table) => [
-  uniqueIndex("email_idx").on(table.email)
-]);
+  name: text('name').notNull(),
+  email: text('email').notNull().unique(),
+  emailVerified: boolean('email_verified').notNull(),
+  image: text('image'),
+  createdAt: timestamp('created_at').notNull(),
+  updatedAt: timestamp('updated_at').notNull(),
+  role: userRoleEnum('role').notNull()
+});
 
 // Infer types from schema
 export type User = typeof users.$inferSelect;
