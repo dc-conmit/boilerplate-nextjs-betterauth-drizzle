@@ -27,7 +27,7 @@ export async function middleware(request: NextRequest) {
 
   if (!session) {
     const callbackUrl = encodeURIComponent(request.nextUrl.pathname);
-    return NextResponse.redirect(new URL(`/auth/login?callbackUrl=${callbackUrl}`, request.url));
+    return NextResponse.redirect(new URL(`/auth/sign-in?callbackUrl=${callbackUrl}`, request.url));
   }
 
   return NextResponse.next();

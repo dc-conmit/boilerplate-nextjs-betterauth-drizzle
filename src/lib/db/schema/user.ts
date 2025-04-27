@@ -11,10 +11,10 @@ export const users = pgTable("users", {
   id: uuid('id').primaryKey().defaultRandom(),
   name: text('name').notNull(),
   email: text('email').notNull().unique(),
-  emailVerified: boolean('email_verified').notNull(),
+  emailVerified: boolean('email_verified').default(false),
   image: text('image'),
-  createdAt: timestamp('created_at').notNull(),
-  updatedAt: timestamp('updated_at').notNull(),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at'),
   role: userRoleEnum('role').notNull()
 });
 
@@ -27,7 +27,7 @@ export const insertUserSchema = createInsertSchema(users);
 export const selectUserSchema = createSelectSchema(users);
 
 // Enhanced schema validation for forms
-export const userFormSchema = insertUserSchema.extend({
+insertUserSchema.extend({
     email: z.string()
         .email("Please enter a valid email address")
         .min(5, "Email is too short")

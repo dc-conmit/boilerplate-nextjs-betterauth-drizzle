@@ -6,7 +6,8 @@ import { signIn } from "@/lib/auth/auth-client"
 import { Label } from "@radix-ui/react-label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-export default function LoginPage() {
+
+export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -32,7 +33,7 @@ export default function LoginPage() {
         cardTitle="Sign In"
         cardDescription="Sign in to your account"
         cardFooterLinkTitle="Sign up"
-        cardFooterLink="/auth/signup"
+        cardFooterLink="/auth/sign-up"
         cardFooterDescription="Don't have an account? Sign up"
       >
         <form onSubmit={handleSubmit} className="space-y-4">
