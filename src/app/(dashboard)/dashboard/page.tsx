@@ -1,10 +1,13 @@
-"use client"
-
-export default function Dashboard() {
+import { getTodos } from '@/lib/api/sample';
+import DashboardContent from './dashboard-content';
+import { Suspense } from 'react';
+import Loading from '@/components/ui/loading';
+export default async function TodosPage() {
+  const todos = await getTodos();
+  
   return (
-    <div>
-      <h1>Dashboard</h1>
-    </div>
-  )
+    <Suspense fallback={<Loading />}>
+      <DashboardContent initialData={todos} />
+    </Suspense>
+  );
 }
-
