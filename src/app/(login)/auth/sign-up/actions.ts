@@ -1,7 +1,7 @@
 import { signUp } from "@/lib/auth/auth-client";
 import { insertUserSchema } from "@/lib/db/schema";
 
-export async function createUser(formData: FormData) {
+export async function registerUser(formData: FormData) {
   const { email, password, name, role } = Object.fromEntries(formData);
   
   // Validation

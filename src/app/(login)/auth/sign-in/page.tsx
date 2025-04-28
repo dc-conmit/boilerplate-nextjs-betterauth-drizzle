@@ -3,25 +3,27 @@
 import { useState } from "react"
 import CardWrapper from "@/components/ui/card-wrapper"
 import { signIn } from "@/lib/auth/auth-client"
-import { Label } from "@radix-ui/react-label"
+import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 export default function SignInPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
     setLoading(true);
 
     try {
       await signIn.email({ email, password, callbackURL: "/" });
+      router.push("/dashboard");
     } catch (error) {
-      setError(error instanceof Error ? error.message : "Failed to sign in");
+      toast.error(error instanceof Error ? error.message : "Failed to sign in");
     } finally {
       setLoading(false);
     }
@@ -63,9 +65,6 @@ export default function SignInPage() {
               required
             />
           </div>
-          {error && (
-            <div className="text-red-500 text-sm">{error}</div>
-          )}
           <Button
             type="submit"
             disabled={loading}
