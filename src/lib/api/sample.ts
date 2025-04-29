@@ -3,7 +3,7 @@
  * @returns Promise containing todo items
  */
 export async function getTodos() {
-  await new Promise((resolve) => setTimeout(resolve, 15000));
+  await new Promise((resolve) => setTimeout(resolve, 5000));
 
   const response = await fetch('https://jsonplaceholder.typicode.com/todos', {
     next: { revalidate: 60 },

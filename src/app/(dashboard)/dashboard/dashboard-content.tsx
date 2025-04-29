@@ -1,13 +1,12 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { getTodos } from '@/lib/api/sample';
 
-export default function DashboardContent({ initialData }: { initialData: any }) {
-  const { data: todos, isLoading, error } = useQuery({
+export default function DashboardContent() {
+  const { data: todos, isLoading, error } = useSuspenseQuery({
     queryKey: ['todos'],
     queryFn: getTodos,
-    initialData,
   });
   
   if (isLoading) return <div>Loading todos...</div>;
