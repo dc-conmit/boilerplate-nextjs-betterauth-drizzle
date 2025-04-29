@@ -1,4 +1,4 @@
-import { BaseLayout } from "./base-layout";
+import { BaseLayout } from "./shared/base-layout";
 
 interface ServiceProviderLayoutProps {
   children: React.ReactNode

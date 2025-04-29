@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-export default function SignInPage() {
+export default function SignIn() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,7 +36,7 @@ export default function SignInPage() {
         cardDescription="Sign in to your account"
         cardFooterLinkTitle="Sign up"
         cardFooterLink="/auth/sign-up"
-        cardFooterDescription="Don't have an account? Sign up"
+        cardFooterDescription="Don't have an account?"
       >
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>

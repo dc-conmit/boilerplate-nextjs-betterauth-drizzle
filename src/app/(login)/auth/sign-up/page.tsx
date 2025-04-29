@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-export default function SignupPage() {
+export default function SignUp() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 

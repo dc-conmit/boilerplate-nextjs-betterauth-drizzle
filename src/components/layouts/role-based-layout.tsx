@@ -3,6 +3,7 @@ import { PropertyManagerLayout } from "./property-manager-layout"
 import { ServiceProviderLayout } from "./service-provider-layout"
 import { auth } from "@/lib/auth/auth";
 import { headers } from "next/headers";
+import AuthPage from "@/app/(login)/auth/page";
 
 interface RoleBasedLayoutProps {
   children: React.ReactNode
@@ -14,7 +15,7 @@ export async function RoleBasedLayout({ children }: RoleBasedLayoutProps) {
   });
 
   if (!session) {
-    return null;
+    return <AuthPage />;
   }
 
   switch (session.user.role) {
