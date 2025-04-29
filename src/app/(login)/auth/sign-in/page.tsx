@@ -1,13 +1,13 @@
 "use client"
 
-import { useState } from "react"
-import CardWrapper from "@/components/ui/card-wrapper"
-import { signIn } from "@/lib/auth/auth-client"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { toast } from "sonner"
-import { useRouter } from "next/navigation"
+import { useState } from "react";
+import CardWrapper from "@/components/ui/card-wrapper";
+import { signIn } from "@/lib/auth/auth-client";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -75,5 +75,5 @@ export default function SignInPage() {
         </form>
       </CardWrapper>
     </div>
-  )
-} 
+  );
+}

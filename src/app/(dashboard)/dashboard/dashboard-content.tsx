@@ -1,7 +1,7 @@
 'use client';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { getTodos } from '@/lib/api/sample';
+import { getTodos, ITodo } from '@/lib/api/sample';
 
 export default function DashboardContent() {
   const { data: todos, isLoading, error } = useSuspenseQuery({
@@ -14,7 +14,7 @@ export default function DashboardContent() {
   
   return (
     <ul>
-      {todos.slice(0, 10).map((todo: any) => (
+      {todos.slice(0, 10).map((todo: ITodo) => (
         <li key={todo.id}>
           {todo.completed ? '✅' : '❌'} {todo.title}
         </li>

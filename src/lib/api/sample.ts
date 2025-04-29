@@ -1,3 +1,9 @@
+export interface ITodo {
+  id: number;
+  title: string;
+  completed: boolean;
+}
+
 /**
  * Fetches todo items from the JSONPlaceholder API
  * @returns Promise containing todo items
