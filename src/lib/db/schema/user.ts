@@ -2,9 +2,14 @@ import { pgTable, uuid, timestamp, text, pgEnum, boolean } from "drizzle-orm/pg-
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
+export enum EUserRole {
+  PropertyManager = "property_manager",
+  ServiceProvider = "service_provider"
+};
+
 export const userRoleEnum = pgEnum("user_roles", [
-  "property_manager",
-  "service_provider"
+  EUserRole.PropertyManager,
+  EUserRole.ServiceProvider
 ]);
 
 export const users = pgTable("users", {
