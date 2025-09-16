@@ -1,31 +1,31 @@
 "use client"
 
-import { useState } from "react";
-import CardWrapper from "@/components/ui/card-wrapper";
-import { signIn } from "@/lib/auth/auth-client";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useState } from "react"
+import CardWrapper from "@/components/ui/card-wrapper"
+import { authClient } from "@/lib/auth/auth-client"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 export default function SignIn() {
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const router = useRouter()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+    e.preventDefault()
+    setLoading(true)
 
     try {
-      await signIn.email({ email, password, callbackURL: "/" });
-      router.push("/dashboard");
+      await authClient.signIn.email({ email, password, callbackURL: "/" })
+      router.push("/dashboard")
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to sign in");
+      toast.error(error instanceof Error ? error.message : "Failed to sign in")
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
 
@@ -75,5 +75,5 @@ export default function SignIn() {
         </form>
       </CardWrapper>
     </div>
-  );
+  )
 }

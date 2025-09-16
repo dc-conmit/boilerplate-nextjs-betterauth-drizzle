@@ -3,13 +3,13 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
 export enum EUserRole {
-  PropertyManager = "property_manager",
-  ServiceProvider = "service_provider"
+  Admin = "admin",
+  User = "user"
 };
 
 export const userRoleEnum = pgEnum("user_roles", [
-  EUserRole.PropertyManager,
-  EUserRole.ServiceProvider
+  EUserRole.Admin,
+  EUserRole.User
 ]);
 
 export const users = pgTable("users", {
@@ -47,6 +47,6 @@ insertUserSchema.extend({
   
     role: z.enum(userRoleEnum.enumValues, {
         required_error: "Please select a role",
-        invalid_type_error: "Role must be either property manager or service provider",
+        invalid_type_error: "Role must be either admin or user",
     }),
 });

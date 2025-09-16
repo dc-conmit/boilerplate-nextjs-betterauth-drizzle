@@ -1,9 +1,8 @@
 import { EUserRole } from "@/lib/db/schema/user"
-import { PropertyManagerLayout } from "./property-manager-layout"
-import { ServiceProviderLayout } from "./service-provider-layout"
-import { auth } from "@/lib/auth/auth";
-import { headers } from "next/headers";
-import AuthPage from "@/app/(login)/auth/page";
+import { AdminLayout } from "./admin-layout"
+import { UserLayout } from "./user-layout"
+import { auth } from "@/lib/auth/auth"
+import { headers } from "next/headers"
 
 interface RoleBasedLayoutProps {
   children: React.ReactNode
@@ -12,18 +11,18 @@ interface RoleBasedLayoutProps {
 export async function RoleBasedLayout({ children }: RoleBasedLayoutProps) {
   const session = await auth.api.getSession({
     headers: await headers()
-  });
+  })
 
-  if (!session) {
-    return <AuthPage />;
+  if (!session?.user) {
+    return <>{children}</>
   }
 
   switch (session.user.role) {
-    case EUserRole.PropertyManager:
-      return <PropertyManagerLayout>{children}</PropertyManagerLayout>
-    case EUserRole.ServiceProvider:
-      return <ServiceProviderLayout>{children}</ServiceProviderLayout>
+    case EUserRole.Admin:
+      return <AdminLayout>{children}</AdminLayout>
+    case EUserRole.User:
+      return <UserLayout>{children}</UserLayout>
     default:
-      return <div>Invalid user role</div>
+      return <>{children}</>
   }
 }

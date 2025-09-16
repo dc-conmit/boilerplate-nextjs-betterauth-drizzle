@@ -16,5 +16,5 @@ export function BaseLayout({ children, title }: BaseLayoutProps) {
         </main>
       </div>
     </div>
-  );
+  )
 }

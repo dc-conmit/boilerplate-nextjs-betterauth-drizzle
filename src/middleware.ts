@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { authClient } from './lib/auth/auth-client';
+import { getSessionCookie } from 'better-auth/cookies';
 
 export async function middleware(request: NextRequest) {
   // Skip middleware for static files and API routes
@@ -17,17 +17,15 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const { data: session } = await authClient.getSession({
-    fetchOptions: {
-      headers: {
-        cookie: request.headers.get("cookie") || "",
-      },
-    }
-  });
+  // Allow unauthenticated access to home page
+  if (request.nextUrl.pathname === '/') {
+    return NextResponse.next();
+  }
 
-  if (!session) {
+  const sessionCookie = getSessionCookie(request);
+  if (!sessionCookie) {
     const callbackUrl = encodeURIComponent(request.nextUrl.pathname);
-    return NextResponse.redirect(new URL(`/auth/sign-in?callbackUrl=${callbackUrl}`, request.url));
+    return NextResponse.redirect(new URL(`/?callbackUrl=${callbackUrl}`, request.url));
   }
 
   return NextResponse.next();

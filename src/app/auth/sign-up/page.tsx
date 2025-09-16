@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import CardWrapper from "@/components/ui/card-wrapper";
-import { registerUser } from "./actions";
+import { registerUser } from "@/lib/server/auth";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation"
 import { useState } from "react"

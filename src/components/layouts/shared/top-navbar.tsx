@@ -1,8 +1,8 @@
 "use client"
 
-import { signOut } from "@/lib/auth/auth-client"
 import { Bell, Settings, LogOut } from "lucide-react"
 import Link from "next/link"
+import { authClient } from "@/lib/auth/auth-client"
 
 export function TopNavbar() {
   return (
@@ -14,18 +14,12 @@ export function TopNavbar() {
         <div className="flex items-center gap-4">
           <div className="w-full flex-1 md:w-auto md:flex-none">
           </div>
-          <button
-            className="p-2 rounded-full hover:bg-muted"
-            onClick={() => {/* TODO: Implement notifications */}}
-          >
-            <Bell className="h-5 w-5" />
-          </button>
           <Link href="/settings" className="p-2 rounded-full hover:bg-muted">
             <Settings className="h-5 w-5" />
           </Link>
           <button
             className="p-2 rounded-full hover:bg-muted"
-            onClick={() => signOut()}
+            onClick={() => authClient.signOut()}
             title="Sign out"
           >
             <LogOut className="h-5 w-5" />
